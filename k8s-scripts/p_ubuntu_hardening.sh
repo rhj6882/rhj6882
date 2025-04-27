@@ -16,9 +16,20 @@ systemctl disable --now bluetooth.service || true
 
 # 3. SSH 보안 설정
 echo "🔑 SSH 보안 설정"
+
+if [ -f /etc/ssh/sshd_config ]; then
+  echo "✅ sshd_config 파일 발견 → 하드닝 적용합니다."
+else
+  echo "⚠️ sshd_config 파일이 없습니다. openssh-server를 설치합니다."
+  apt update
+  apt install -y openssh-server
+fi
+
+# (파일이 없었어도 설치되었으니 이제 하드닝 적용)
 sed -i 's/^#\?PermitRootLogin.*/PermitRootLogin no/' /etc/ssh/sshd_config
 sed -i 's/^#PasswordAuthentication.*/PasswordAuthentication no/' /etc/ssh/sshd_config
 systemctl restart sshd
+
 
 # 4. 자동 보안 업데이트 설정
 echo "🔄 자동 보안 업데이트 활성화"
