@@ -24,4 +24,4 @@ sudo apt-get install -y trivy
 # 7. Trivy 버전 확인
 trivy --version
 
-echo "trivy 설치 끝"
+echo "trivy 설치 끝 / 실행하려면 trivy image [image] 입력"
