@@ -7,13 +7,13 @@ fi
 
 # 2. 필요한 패키지 설치
 sudo apt-get update
-sudo apt-get install -y wget apt-transport-https gnupg lsb-release
+sudo apt-get install -y wget apt-transport-https gnupg lsb-release curl
 
-# 3. Trivy 저장소 키 등록
-wget -qO - https://aquasecurity.github.io/trivy-repo/deb/public.key | sudo tee /etc/apt/trusted.gpg.d/trivy.gpg > /dev/null
+# 3. Trivy 저장소 키 등록 (올바른 방법)
+curl -fsSL https://aquasecurity.github.io/trivy-repo/deb/public.key | sudo gpg --dearmor -o /usr/share/keyrings/trivy-archive-keyring.gpg
 
-# 4. Trivy 저장소 등록
-echo "deb https://aquasecurity.github.io/trivy-repo/deb $(lsb_release -sc) main" | sudo tee /etc/apt/sources.list.d/trivy.list
+# 4. Trivy 저장소 등록 (signed-by 추가)
+echo "deb [signed-by=/usr/share/keyrings/trivy-archive-keyring.gpg] https://aquasecurity.github.io/trivy-repo/deb $(lsb_release -sc) main" | sudo tee /etc/apt/sources.list.d/trivy.list
 
 # 5. 패키지 목록 갱신
 sudo apt-get update
