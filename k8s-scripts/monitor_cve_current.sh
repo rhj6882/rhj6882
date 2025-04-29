@@ -1,4 +1,6 @@
 #!/bin/bash
+PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+cd /home/heeju/Desktop/rhj6882/k8s-scripts
 
 STATE_DIR="./cve_current_state"
 mkdir -p "$STATE_DIR"
